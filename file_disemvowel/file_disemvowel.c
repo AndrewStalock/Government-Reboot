@@ -1,0 +1,83 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+#define BUF_SIZE 1024
+
+int is_vowel(char c) {
+   if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') return 1;
+   return 0;
+  }
+
+int copy_non_vowel(int num_chars, char* in_buf, char* out_buf) {
+  int i;
+  int j = 0;  
+  int count = 0;
+
+  for(i = 0; i < num_chars; ++i) {
+    if(!is_vowel(in_buf[i])) {
+      out_buf[j] = in_buf[i];
+      ++j;
+      ++count;
+    }
+  }
+  return count;
+}
+
+void disemvowel(FILE* inputFile, FILE* outputFile) {
+  char inputBuffer[BUF_SIZE];
+  char outputBuffer[BUF_SIZE];
+
+  int len;
+  
+  while((fread(inputBuffer, sizeof(char), BUF_SIZE, inputFile)) != NULL){
+	len = strlen(inputBuffer);
+	copy_non_vowel(len, inputBuffer, outputBuffer);
+	fwrite(outputBuffer, sizeof(char), BUF_SIZE, outputFile);
+  }
+}
+
+int main(int argc, char *argv[]) {
+  FILE *inputFile;
+  FILE *outputFile;
+
+  switch(argc)
+	{
+	case 1:
+	  inputFile = stdin;
+	  outputFile = stdout;
+	  break;
+	
+	case 2: 
+	  if((inputFile = fopen(argv[1], "r" )) == NULL)
+	  {
+	  puts ("Can't open input file.\n");
+	  exit(0);
+	  }
+	outputFile = stdout;
+	break;
+	
+	case 3:
+	  if((inputFile = fopen(argv[1], "w" )) == NULL)
+	  {
+	  puts ("Can't open input file.\n");
+	  exit(0);
+	  }
+	  if((outputFile = fopen(argv[2], "w" )) == NULL)
+	  {
+	  puts ("Can't open output file.\n");
+	  exit(0);
+	  }
+	  break;
+	
+	default:
+	  puts("Wrong parameters.\n");
+	  exit(0);
+	}
+
+  disemvowel(inputFile, outputFile);
+  fclose(inputFile);
+  fclose(outputFile);
+
+  return 0;
+}

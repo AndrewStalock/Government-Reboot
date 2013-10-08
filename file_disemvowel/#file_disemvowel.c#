@@ -1,0 +1,50 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+
+}
+
+char* disemvowel(FILE* file) { 
+  
+  FILE *fileRead;
+  fileRead = fopen(file, "r");
+
+  char* fileString;
+  char message[10][150], buffer[150];
+  scanf("%s", fileRead);
+  printf("%s\n", fileString);
+
+  int i;
+  int j = 0;
+  int len;
+  int count = 0;
+  
+  //fgets sucks
+  while(fgets(buffer,150,fileRead)){
+    strcopy(message[i], buffer);
+    printf("%s", i, message[i]);
+    i++;
+  }
+  
+  getchar();
+
+  for(i = 0; i < len; ++i){
+    if(!(string[i] == 'a' || string[i] == 'e' || string[i] == 'i' || string[i] == 'o' || string[i] == 'u' || string[i] == 'A' || string[i] == 'E' || string[i] == 'I' || string[i] == 'O' || string[i] == 'U')){
+      ++count;
+    }
+  }
+
+  char* noVow;
+  noVow = calloc(count + 1, sizeof(char));
+
+  for(i = 0; i < len; ++i){
+    if(!(string[i] == 'a' || string[i] == 'e' || string[i] == 'i' || string[i] == 'o' || string[i] == 'u' || string[i] == 'A' || string[i] == 'E' || string[i] == 'I' || string[i] == 'O' || string[i] == 'U')){
+      noVow[j] = string[i];
+      ++j;
+    }
+   }
+
+  return noVow;
+}
